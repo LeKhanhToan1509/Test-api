@@ -1,9 +1,10 @@
 document.getElementById("inputFile").addEventListener("change", function () {
     var fileList = document.getElementById("fileList");
     fileList.innerHTML = "";
-    for (var i = 0; i < this.files.length; i++) {
+    var files = this.files;
+    for (var i = 0; i < files.length; i++) {
         var li = document.createElement("li");
-        li.textContent = this.files[i].name;
+        li.textContent = files[i].name;
         fileList.appendChild(li);
     }
 });
@@ -11,6 +12,10 @@ document.getElementById("inputFile").addEventListener("change", function () {
 const btn = document.querySelector(".buttonSubmit");
 btn.addEventListener("click", () => {
     const fileInput = document.querySelector("#inputFile");
+    if (fileInput.files.length === 0) {
+        alert("Please select a file");
+        return;
+    }
     const files = fileInput.files;
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
@@ -22,8 +27,8 @@ btn.addEventListener("click", () => {
         body: formData,
     })
         .then((response) => response.json())
-        .then((data) => {
-            console.log("Success:", data);
+        .then(() => {
+            alert(`Upload success`);
         })
         .catch((error) => {
             console.error("Error:", error);
