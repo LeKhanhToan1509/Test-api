@@ -27,7 +27,7 @@ async def upload_files(files: List[UploadFile] = File(...)):
     for file in files:
         file_ext = file.filename.split(".").pop()
         file_name = token_hex(10)
-        file_path = f"File/{file_name}.{file_ext}"
+        file_path = f"Files/{file_name}.{file_ext}"
         with open(file_path, "wb") as f:
             content = await file.read()
             f.write(content)
